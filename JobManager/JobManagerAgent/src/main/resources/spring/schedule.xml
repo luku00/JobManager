@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+    <bean id="agent" class="com.sport.jobmanager.schedule.Agent" abstract="true">
+        <property name="millisToWait" value="${agents.millisToWait}"/>
+    </bean>
+
+    <bean id="jobEmailAgent"
+          class="com.sport.jobmanager.schedule.EmailAgent" parent="agent">
+        <property name="agentType" value="EmailAgent"/>
+        <property name="agentName" value="EmailAgent"/>
+    </bean>
+
+    <bean id="jobEmailAgentJob" class="com.sport.jobmanager.schedule.ExceptionFilteringJobDetailFactoryBean">
+        <property name="targetObject" ref="jobEmailAgent" />
+        <property name="targetMethod" value="execute" />
+    </bean>
+
+    <bean id="jobEmailAgentTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="jobEmailAgentJob" />
+        <property name="cronExpression" value="${jobEmailAgent.startInterval}" />
+    </bean>
+
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="autoStartup" value="${scheduler.autostart}" />
+        <property name="triggers">
+            <list>
+                <ref bean="jobEmailAgentTrigger" />
+            </list>
+        </property>
+        <property name="quartzProperties">
+            <props>
+                <prop key="org.quartz.scheduler.jmx.export">${scheduler.jmxExport}</prop>
+                <prop key="org.quartz.threadPool.threadCount">${scheduler.threadPoolSize}</prop>
+            </props>
+        </property>
+    </bean>
+
+</beans>
