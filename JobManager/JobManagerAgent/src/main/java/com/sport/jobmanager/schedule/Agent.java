@@ -1,5 +1,6 @@
 package com.sport.jobmanager.schedule;
 
+import com.sport.jobmanager.dao.JobManagerDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +16,8 @@ public abstract class Agent {
     private String agentType;
     private Integer millisToWait;
     private boolean running;
+
+    private JobManagerDao jobManagerDao;
 
     @Transactional
     public void execute() {
@@ -61,6 +64,14 @@ public abstract class Agent {
 
     public void setRunning(boolean running) {
         this.running = running;
+    }
+
+    public JobManagerDao getJobManagerDao() {
+        return jobManagerDao;
+    }
+
+    public void setJobManagerDao(JobManagerDao jobManagerDao) {
+        this.jobManagerDao = jobManagerDao;
     }
 
 }

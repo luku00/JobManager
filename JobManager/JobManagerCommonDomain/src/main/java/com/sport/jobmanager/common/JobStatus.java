@@ -11,6 +11,10 @@ public enum JobStatus {
      */
     INITIAL,
     /**
+     * has been verified by agent and is ready to process
+     */
+    READY_TO_PROCESS,
+    /**
      * job is processing
      */
     PROCESSING,

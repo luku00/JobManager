@@ -10,6 +10,8 @@ import static javax.persistence.EnumType.STRING;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import org.hibernate.annotations.GenericGenerator;
@@ -18,6 +20,10 @@ import org.hibernate.annotations.GenericGenerator;
  *
  * @author Lukas Kubicek 
  */
+@NamedQueries({
+    @NamedQuery(name = "Job.findJobReadyToPickUp", query = "select j from Job j where jobStatus = 'INITIAL' ORDER BY jobId DESC"),
+    @NamedQuery(name = "Job.findJobReadyToProcess", query = "select j from Job j where jobStatus = 'READY_TO_PROCESS' OR jobStatus = 'PROCESSING' AND reprocess = true")
+})
 @Entity
 @Table(name = "JOBS")
 public class Job implements Serializable {
