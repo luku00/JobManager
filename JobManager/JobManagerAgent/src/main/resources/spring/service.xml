@@ -6,4 +6,7 @@
 
     <bean id="jobManagerDao" class="com.sport.jobmanager.dao.JobManagerDaoImpl" />
 
+    <bean id="emailService" class="com.sport.jobmanager.serviceimpl.EmailServiceImpl">
+        <property name="newSubUserSubject" value="${subject.new.subuser}"/>
+    </bean>
 </beans>

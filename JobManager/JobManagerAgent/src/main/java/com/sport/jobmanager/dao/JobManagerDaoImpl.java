@@ -38,4 +38,12 @@ public class JobManagerDaoImpl implements JobManagerDao {
         List<Job> result = (List<Job>) query.list();
         return result;
     }
+
+    @Override
+    public List<Job> getJobsReadyForProcessing(String agentName) {
+        Query query = getCurrentSession().getNamedQuery("Job.findJobReadyToProcess");
+        query.setParameter("agentName", agentName);
+        List<Job> result = (List<Job>) query.list();
+        return result;
+    }
 }

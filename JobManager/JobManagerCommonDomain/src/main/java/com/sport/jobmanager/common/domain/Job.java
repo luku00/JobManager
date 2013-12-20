@@ -15,6 +15,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import org.hibernate.annotations.GenericGenerator;
+import org.joda.time.DateTime;
 
 /**
  *
@@ -22,7 +23,7 @@ import org.hibernate.annotations.GenericGenerator;
  */
 @NamedQueries({
     @NamedQuery(name = "Job.findJobReadyToPickUp", query = "select j from Job j where jobStatus = 'INITIAL' ORDER BY jobId DESC"),
-    @NamedQuery(name = "Job.findJobReadyToProcess", query = "select j from Job j where jobStatus = 'READY_TO_PROCESS' OR jobStatus = 'PROCESSING' AND reprocess = true")
+    @NamedQuery(name = "Job.findJobReadyToProcess", query = "select j from Job j where jobStatus = 'READY_TO_PROCESS' OR jobStatus = 'PROCESSING' AND reprocess = true AND agentName =:agentName")
 })
 @Entity
 @Table(name = "JOBS")
@@ -60,6 +61,9 @@ public class Job implements Serializable {
     @Column(name = "JOB_EXPIRATION")
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date jobExpiration;
+
+    @Column(name = "AGENT_NAME")
+    private String agentName;
 
     public Integer getJobId() {
         return jobId;
@@ -133,4 +137,15 @@ public class Job implements Serializable {
         this.jobExpiration = jobExpiration;
     }
 
+    public DateTime getJobExpirationDate() {
+        return new DateTime(jobExpiration);
+    }
+
+    public String getAgentName() {
+        return agentName;
+    }
+
+    public void setAgentName(String agentName) {
+        this.agentName = agentName;
+    }
 }

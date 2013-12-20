@@ -15,12 +15,15 @@
           class="com.sport.jobmanager.schedule.EmailAgent" parent="agent">
         <property name="agentType" value="EmailAgent"/>
         <property name="agentName" value="EmailAgent"/>
+        <property name="emailService" ref="emailService"/>
     </bean>
 
     <bean id="jobPrepareAgent"
           class="com.sport.jobmanager.schedule.PrepareAgent" parent="agent">
         <property name="agentType" value="PrepareAgent"/>
         <property name="agentName" value="PrepareAgent"/>
+        <property name="jobAge" value="${jobAgeHours}"/>
+        <property name="numberOfReprocess" value="${jobReprocess}"/>
     </bean>
 
 

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 public abstract class Agent {
 
     static Logger LOGGER = LoggerFactory.getLogger("error");
+    static Logger LOGGER_AGENT = LoggerFactory.getLogger("agent");
     protected String agentName;
     private String agentType;
     private Integer millisToWait;
@@ -27,6 +28,7 @@ public abstract class Agent {
             }
         } catch (Exception e) {
             LOGGER.error(agentName, e);
+            LOGGER_AGENT.info(e.getLocalizedMessage());
         } finally {
             stopAgent();
         }

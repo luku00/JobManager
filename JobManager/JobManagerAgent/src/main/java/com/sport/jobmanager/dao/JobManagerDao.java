@@ -13,4 +13,6 @@ public interface JobManagerDao {
      * this will load jobs in specific status
      */
     List<Job> getJobs(JobStatus status);
+
+    List<Job> getJobsReadyForProcessing(String agentName);
 }
