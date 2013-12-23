@@ -23,7 +23,7 @@ import org.joda.time.DateTime;
  */
 @NamedQueries({
     @NamedQuery(name = "Job.findJobReadyToPickUp", query = "select j from Job j where jobStatus = 'INITIAL' ORDER BY jobId DESC"),
-    @NamedQuery(name = "Job.findJobReadyToProcess", query = "select j from Job j where jobStatus = 'READY_TO_PROCESS' OR jobStatus = 'PROCESSING' AND reprocess = true AND agentName =:agentName")
+    @NamedQuery(name = "Job.findJobReadyToProcess", query = "select j from Job j where reprocess = :trueValue AND agentName =:agentName")
 })
 @Entity
 @Table(name = "JOBS")

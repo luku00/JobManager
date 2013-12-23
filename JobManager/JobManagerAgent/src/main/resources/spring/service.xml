@@ -8,5 +8,16 @@
 
     <bean id="emailService" class="com.sport.jobmanager.serviceimpl.EmailServiceImpl">
         <property name="newSubUserSubject" value="${subject.new.subuser}"/>
+        <property name="mailSender" ref="mailSender"/>
+        <property name="templates">
+            <map>
+                <entry key="newSubUser" value="${path.template.newSubUser}" />
+            </map>
+
+        </property>
+    </bean>
+
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="${smtp.host}"/>
     </bean>
 </beans>
