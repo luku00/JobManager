@@ -47,4 +47,9 @@ public class PrepareAgent extends Agent {
     public void setNumberOfReprocess(int numberOfReprocess) {
         this.numberOfReprocess = numberOfReprocess;
     }
+
+    @Override
+    protected void agentSpecificPostLogic(Job job, boolean success) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

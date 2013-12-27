@@ -1,5 +1,6 @@
 package com.sport.jobmanager.schedule;
 
+import com.sport.jobmanager.common.domain.Job;
 import com.sport.jobmanager.dao.JobManagerDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,7 +51,9 @@ public abstract class Agent {
         }
     }
 
-    protected abstract void agentSpecificLogic(String agentName, String agentType);
+    protected abstract void agentSpecificLogic(String agentName, String agentType) throws Exception;
+
+    protected abstract void agentSpecificPostLogic(Job job, boolean success);
 
     public void setAgentName(String agentName) {
         this.agentName = agentName;

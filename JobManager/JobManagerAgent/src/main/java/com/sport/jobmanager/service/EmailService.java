@@ -15,5 +15,5 @@ public interface EmailService {
     /**
      * This will create and send email for password reset
      */
-    void sendEmailForPasswordReset(Job job);
+    void sendEmailForPasswordReset(Job job) throws Exception;
 }

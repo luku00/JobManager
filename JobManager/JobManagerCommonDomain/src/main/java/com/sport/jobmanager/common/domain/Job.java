@@ -65,6 +65,10 @@ public class Job implements Serializable {
     @Column(name = "AGENT_NAME")
     private String agentName;
 
+    // specific identifier
+    @Column(name = "JOB_IDENTIFIER")
+    private String jobIdentifier;
+
     public Integer getJobId() {
         return jobId;
     }
@@ -147,5 +151,13 @@ public class Job implements Serializable {
 
     public void setAgentName(String agentName) {
         this.agentName = agentName;
+    }
+
+    public String getJobIdentifier() {
+        return jobIdentifier;
+    }
+
+    public void setJobIdentifier(String jobIdentifier) {
+        this.jobIdentifier = jobIdentifier;
     }
 }

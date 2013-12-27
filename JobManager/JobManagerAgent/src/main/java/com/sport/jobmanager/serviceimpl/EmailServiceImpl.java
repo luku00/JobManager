@@ -2,11 +2,16 @@ package com.sport.jobmanager.serviceimpl;
 
 import com.sport.jobmanager.common.domain.Job;
 import com.sport.jobmanager.service.EmailService;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.Map;
+import javax.mail.internet.MimeMessage;
+import org.apache.velocity.app.VelocityEngine;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
+import org.springframework.ui.velocity.VelocityEngineUtils;
 
 /**
  *
@@ -14,12 +19,31 @@ import org.springframework.mail.javamail.JavaMailSender;
  */
 public class EmailServiceImpl implements EmailService {
 
+    static Logger LOGGER = LoggerFactory.getLogger("agent");
+
+    private String encoding;
+    private String sentFrom;
     private String newSubUserSubject;
+    private String resetPasswordSubject;
+    private String resetPasswordBaseUrl;
     private JavaMailSender mailSender;
+    private VelocityEngine velocityEngine;
     private Map<String, String> templates;
 
     public void setNewSubUserSubject(String newSubUserSubject) {
         this.newSubUserSubject = newSubUserSubject;
+    }
+
+    public void setVelocityEngine(VelocityEngine velocityEngine) {
+        this.velocityEngine = velocityEngine;
+    }
+
+    public void setSentFrom(String sentFrom) {
+        this.sentFrom = sentFrom;
+    }
+
+    public void setEncoding(String encoding) {
+        this.encoding = encoding;
     }
 
     public void setMailSender(JavaMailSender mailSender) {
@@ -30,28 +54,50 @@ public class EmailServiceImpl implements EmailService {
         this.templates = templates;
     }
 
-    @Override
-    public void sendEmailForNewSubUser(Job job) {
-        String test = getBodyFromTemplate(templates.get("newSubUser"));
+    public void setResetPasswordBaseUrl(String resetPasswordBaseUrl) {
+        this.resetPasswordBaseUrl = resetPasswordBaseUrl;
+    }
+
+    public void setResetPasswordSubject(String resetPasswordSubject) {
+        this.resetPasswordSubject = resetPasswordSubject;
     }
 
     @Override
-    public void sendEmailForPasswordReset(Job job) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void sendEmailForNewSubUser(final Job job) {
+        Map model = new HashMap();
+        model.put("user", job.getUserFirstName() + " " + job.getUserLastName());
+
+        sendEmail("newSubUser", newSubUserSubject, job, model);
     }
 
-    private String getBodyFromTemplate(String path) {
-        StringBuilder contentBuilder = new StringBuilder();
-        try {
-            BufferedReader in = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream(path)));
-            String str;
-            while ((str = in.readLine()) != null) {
-                contentBuilder.append(str);
-            }
-            in.close();
-        } catch (IOException e) {
-            String ee = e.getLocalizedMessage();
+    @Override
+    public void sendEmailForPasswordReset(Job job) throws Exception {
+        if (job.getJobIdentifier() == null) {
+            throw new Exception("missing job identifier");
         }
-        return contentBuilder.toString();
+        String link = resetPasswordBaseUrl + "/" + job.getJobIdentifier();
+
+        Map model = new HashMap();
+        model.put("user", job.getUserFirstName() + " " + job.getUserLastName());
+        model.put("link", link);
+
+        sendEmail("resetPassword", resetPasswordSubject, job, model);
+    }
+
+    private void sendEmail(final String template, final String subject, final Job job, final Map model) {
+        MimeMessagePreparator preparator = new MimeMessagePreparator() {
+            @Override
+            public void prepare(MimeMessage mimeMessage) throws Exception {
+                MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
+                message.setTo(job.getUserEmail());
+                message.setFrom(sentFrom);
+                message.setSubject(subject);
+                String text = VelocityEngineUtils.mergeTemplateIntoString(
+                        velocityEngine, templates.get(template), encoding, model);
+                message.setText(text, true);
+            }
+        };
+
+        mailSender.send(preparator);
     }
 }
