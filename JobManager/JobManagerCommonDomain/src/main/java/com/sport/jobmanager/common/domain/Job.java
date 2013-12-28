@@ -3,6 +3,7 @@ package com.sport.jobmanager.common.domain;
 import com.sport.jobmanager.common.JobStatus;
 import com.sport.jobmanager.common.JobType;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
 import org.hibernate.annotations.GenericGenerator;
 import org.joda.time.DateTime;
 
@@ -23,11 +23,16 @@ import org.joda.time.DateTime;
  */
 @NamedQueries({
     @NamedQuery(name = "Job.findJobReadyToPickUp", query = "select j from Job j where jobStatus = 'INITIAL' ORDER BY jobId DESC"),
-    @NamedQuery(name = "Job.findJobReadyToProcess", query = "select j from Job j where reprocess = :trueValue AND agentName =:agentName")
+    @NamedQuery(name = "Job.findJobReadyToProcess", query = "select j from Job j where reprocess = :trueValue AND agentName =:agentName"),
+    @NamedQuery(name = "Job.findJobsreadyToClean", query = "select j from Job j where jobStatus = 'COMPLETED' AND jobExpiration < :cleanDate")
 })
 @Entity
 @Table(name = "JOBS")
 public class Job implements Serializable {
+
+    public static final String JOBS_READY_TO_PICK_UP = "Job.findJobReadyToPickUp";
+    public static final String JOBS_READY_TO_PROCESS = "Job.findJobReadyToProcess";
+    public static final String JOBS_READY_TO_CLEAN = "Job.findJobsreadyToClean";
 
     @Id
     @Column(name = "JOB_ID")
@@ -59,8 +64,7 @@ public class Job implements Serializable {
     private int reprocessCount;
 
     @Column(name = "JOB_EXPIRATION")
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date jobExpiration;
+    private Timestamp jobExpiration;
 
     @Column(name = "AGENT_NAME")
     private String agentName;
@@ -137,7 +141,7 @@ public class Job implements Serializable {
         return jobExpiration;
     }
 
-    public void setJobExpiration(Date jobExpiration) {
+    public void setJobExpiration(Timestamp jobExpiration) {
         this.jobExpiration = jobExpiration;
     }
 
@@ -160,4 +164,14 @@ public class Job implements Serializable {
     public void setJobIdentifier(String jobIdentifier) {
         this.jobIdentifier = jobIdentifier;
     }
+
+    @Override
+    public String toString() {
+        return "Job{" + "jobId=" + jobId + ", userFirstName=" + userFirstName
+                + ", userLastName=" + userLastName + ", userEmail=" + userEmail
+                + ", jobType=" + jobType + ", jobStatus=" + jobStatus + ", reprocess="
+                + reprocess + ", reprocessCount=" + reprocessCount + ", jobExpiration="
+                + jobExpiration + ", agentName=" + agentName + ", jobIdentifier=" + jobIdentifier + '}';
+    }
+
 }

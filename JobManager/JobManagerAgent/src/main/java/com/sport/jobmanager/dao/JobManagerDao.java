@@ -2,6 +2,7 @@ package com.sport.jobmanager.dao;
 
 import com.sport.jobmanager.common.JobStatus;
 import com.sport.jobmanager.common.domain.Job;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -15,4 +16,8 @@ public interface JobManagerDao {
     List<Job> getJobs(JobStatus status);
 
     List<Job> getJobsReadyForProcessing(String agentName);
+
+    List<Job> getJobsToCleanUp(Timestamp cleanDate);
+
+    void removeJob(Job job);
 }

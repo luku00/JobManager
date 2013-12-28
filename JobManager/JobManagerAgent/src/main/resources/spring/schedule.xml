@@ -26,6 +26,12 @@
         <property name="numberOfReprocess" value="${jobReprocess}"/>
     </bean>
 
+    <bean id="jobCleanUpAgent"
+          class="com.sport.jobmanager.schedule.CleanUpAgent" parent="agent">
+        <property name="agentType" value="CleanUpAgent"/>
+        <property name="agentName" value="CleanUpAgent"/>
+        <property name="jobCleanDate" value="${jobDaysBeforeCleanUp}"/>
+    </bean>
 
     <!-- Jobs -->
 
@@ -39,6 +45,10 @@
         <property name="targetMethod" value="execute" />
     </bean>
 
+    <bean id="cleanUpAgentJob" class="com.sport.jobmanager.schedule.ExceptionFilteringJobDetailFactoryBean">
+        <property name="targetObject" ref="jobCleanUpAgent" />
+        <property name="targetMethod" value="execute" />
+    </bean>
 
     <!-- triggers -->
 
@@ -54,6 +64,11 @@
         <property name="cronExpression" value="${jobPrepareAgent.startInterval}" />
     </bean>
 
+    <bean id="jobCleanUpAgentTrigger"
+          class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="cleanUpAgentJob" />
+        <property name="cronExpression" value="${jobCleanUpAgent.startInterval}" />
+    </bean>
 
     <!-- scheduler -->
     
@@ -63,6 +78,7 @@
             <list>
                 <ref bean="jobPrepareAgentTrigger" />
                 <ref bean="jobEmailAgentTrigger" />
+                <ref bean="jobCleanUpAgentTrigger" />
             </list>
         </property>
         <property name="quartzProperties">

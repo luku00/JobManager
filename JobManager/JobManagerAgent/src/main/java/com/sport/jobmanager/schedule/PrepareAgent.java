@@ -2,6 +2,7 @@ package com.sport.jobmanager.schedule;
 
 import com.sport.jobmanager.common.JobStatus;
 import com.sport.jobmanager.common.domain.Job;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -34,7 +35,7 @@ public class PrepareAgent extends Agent {
             LOGGER.info(agentName + ", JobId :" + job.getJobId());
             job.setReprocess(true);
             job.setReprocessCount(numberOfReprocess);
-            job.setJobExpiration(jobExpiredTime);
+            job.setJobExpiration(new Timestamp(jobExpiredTime.getTime()));
             job.setJobStatus(JobStatus.READY_TO_PROCESS);
             job.setAgentName(job.getJobType().getValue());
         }

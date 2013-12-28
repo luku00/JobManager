@@ -31,6 +31,16 @@
         </layout>
     </appender>
 
+    <appender name="celanedAppender" class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="../logs/jobManager/celanedJobs.log"/>
+        <param name="MaxFileSize" value="10000KB" />
+        <param name="MaxBackupIndex" value="100" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                   value="%-5p {%d{dd.MM.yyyy - HH.mm.ss,SSS}} %X{ClientTraceId} %X{CallSequenceTrace} %m%n"/>
+        </layout>
+    </appender>
+
     <logger name="error" additivity="false" >
         <level value="ERROR" />
         <appender-ref ref="errorAppender"/>
@@ -44,6 +54,11 @@
     <logger name="agent" additivity="false" >
         <level value="INFO" />
         <appender-ref ref="agentAppender"/>
+    </logger>
+
+    <logger name="cleanedJobs" additivity="false" >
+        <level value="INFO" />
+        <appender-ref ref="celanedAppender"/>
     </logger>
 
     <root>
