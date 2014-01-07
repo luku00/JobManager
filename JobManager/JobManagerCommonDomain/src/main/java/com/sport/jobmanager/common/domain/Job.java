@@ -69,7 +69,7 @@ public class Job implements Serializable {
     @Column(name = "AGENT_NAME")
     private String agentName;
 
-    // specific identifier
+    // specific identifier at the moment used for password hash
     @Column(name = "JOB_IDENTIFIER")
     private String jobIdentifier;
 
