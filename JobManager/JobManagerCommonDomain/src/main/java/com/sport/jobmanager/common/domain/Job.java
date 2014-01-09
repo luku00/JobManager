@@ -24,7 +24,8 @@ import org.joda.time.DateTime;
 @NamedQueries({
     @NamedQuery(name = "Job.findJobReadyToPickUp", query = "select j from Job j where jobStatus = 'INITIAL' ORDER BY jobId DESC"),
     @NamedQuery(name = "Job.findJobReadyToProcess", query = "select j from Job j where reprocess = :trueValue AND agentName =:agentName"),
-    @NamedQuery(name = "Job.findJobsreadyToClean", query = "select j from Job j where jobStatus = 'COMPLETED' AND jobExpiration < :cleanDate")
+    @NamedQuery(name = "Job.findJobsreadyToClean", query = "select j from Job j where jobStatus = 'COMPLETED' AND jobExpiration < :cleanDate"),
+    @NamedQuery(name = "Job.findJobByIdentifier", query = "select j from Job j where jobIdentifier = :jobIdentifier")
 })
 @Entity
 @Table(name = "JOBS")
