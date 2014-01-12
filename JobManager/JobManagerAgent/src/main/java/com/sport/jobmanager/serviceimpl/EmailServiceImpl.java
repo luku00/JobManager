@@ -72,6 +72,7 @@ public class EmailServiceImpl implements EmailService {
         Map model = new HashMap();
         model.put("user", job.getUserFirstName() + " " + job.getUserLastName());
         model.put("link", forgotPasswordBaseUrl);
+        model.put("login", job.getUserLogin());
 
         sendEmail("newSubUser", newSubUserSubject, job, model);
     }

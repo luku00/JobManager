@@ -2,7 +2,7 @@
 <html>
     <body>
         <h3>Hi ${user}, your new account has been created.. </h3>
-
+        <div>Your user login is ${login}</div>
         <div>
             Please visit <a href="${link}">${link}</a> and change to your own password.
         </div>

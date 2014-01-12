@@ -50,6 +50,9 @@ public class Job implements Serializable {
     @Column(name = "USER_EMAIL")
     private String userEmail;
 
+    @Column(name = "USER_LOGIN")
+    private String userLogin;
+
     @Enumerated(STRING)
     @Column(name = "JOB_TYPE")
     private JobType jobType;
@@ -164,6 +167,14 @@ public class Job implements Serializable {
 
     public void setJobIdentifier(String jobIdentifier) {
         this.jobIdentifier = jobIdentifier;
+    }
+
+    public String getUserLogin() {
+        return userLogin;
+    }
+
+    public void setUserLogin(String userLogin) {
+        this.userLogin = userLogin;
     }
 
     @Override
