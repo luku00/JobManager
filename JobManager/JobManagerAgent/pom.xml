@@ -4,12 +4,12 @@
     <parent>
         <artifactId>JobManager</artifactId>
         <groupId>com.sport.jobmanager</groupId>
-        <version>1.0</version>
+        <version>1.0.1-SNAPSHOT</version>
     </parent>
 
     <groupId>com.sport.jobmanager</groupId>
     <artifactId>JobManagerAgent</artifactId>
-    <version>1.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <name>JobManagerAgent</name>

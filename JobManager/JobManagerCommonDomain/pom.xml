@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.sport.jobmanager</groupId>
         <artifactId>JobManager</artifactId>
-        <version>1.0</version>
+        <version>1.0.1-SNAPSHOT</version>
     </parent>
   
     <groupId>com.sport.jobmanager</groupId>
     <artifactId>JobManagerCommonDomain</artifactId>
-    <version>1.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <name>CommonDomain</name>
 
     <properties>
