@@ -11,7 +11,8 @@
         <property name="resetPasswordSubject" value="${subject.reset.password}"/>
         <property name="encoding" value="${email.template.encoding}"/>
         <property name="sentFrom" value="${smtp.user}"/>
-        <property name="resetPasswordBaseUrl" value="${url.reset.password}"/>
+        <property name="resetPasswordBaseUrl" value="${url.base}${url.reset.password}"/>
+        <property name="forgotPasswordBaseUrl" value="${url.base}${url.forgot.password}"/>
         <property name="mailSender" ref="mailSender"/>
         <property name="velocityEngine" ref="velocityEngine"/>
         <property name="templates">

@@ -23,6 +23,11 @@ public enum JobStatus {
      */
     COMPLETED,
     /**
+     * Job has been changed after completed due to user action. no other action
+     * is required
+     */
+    POST_COMPLETED,
+    /**
      * Job failed
      */
     FAILED;

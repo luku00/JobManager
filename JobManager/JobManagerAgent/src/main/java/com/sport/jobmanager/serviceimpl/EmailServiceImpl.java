@@ -26,9 +26,14 @@ public class EmailServiceImpl implements EmailService {
     private String newSubUserSubject;
     private String resetPasswordSubject;
     private String resetPasswordBaseUrl;
+    private String forgotPasswordBaseUrl;
     private JavaMailSender mailSender;
     private VelocityEngine velocityEngine;
     private Map<String, String> templates;
+
+    public void setForgotPasswordBaseUrl(String forgotPasswordBaseUrl) {
+        this.forgotPasswordBaseUrl = forgotPasswordBaseUrl;
+    }
 
     public void setNewSubUserSubject(String newSubUserSubject) {
         this.newSubUserSubject = newSubUserSubject;
@@ -66,6 +71,7 @@ public class EmailServiceImpl implements EmailService {
     public void sendEmailForNewSubUser(final Job job) {
         Map model = new HashMap();
         model.put("user", job.getUserFirstName() + " " + job.getUserLastName());
+        model.put("link", forgotPasswordBaseUrl);
 
         sendEmail("newSubUser", newSubUserSubject, job, model);
     }
