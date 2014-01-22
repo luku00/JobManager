@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h3>Hi ${user}, </h3>
+        <div>New plan has been created and assigned to you</div>
+        <div>
+            Start date : ${fromDate} </br>
+            End date : ${toDate} </br>
+            Goal : ${goal} ${goalType}</br>
+            Reward : ${reward} </br>
+        </div>
+    </body>
+
+</html>

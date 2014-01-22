@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  */
 public class EmailAgent extends Agent {
 
-    static Logger LOGGER = LoggerFactory.getLogger("agent");
+    static Logger LOG = LoggerFactory.getLogger("agent");
 
     private EmailService emailService;
 
@@ -38,6 +38,10 @@ public class EmailAgent extends Agent {
             emailService.sendEmailForNewSubUser(job);
         } else if (JobType.EMAIL_RESET_PASSWORD == job.getJobType()) {
             emailService.sendEmailForPasswordReset(job);
+        } else if (JobType.EMAIL_NEW_PLAN == job.getJobType()) {
+            emailService.sendEmailForNewPlan(job);
+        } else {
+            throw new UnsupportedOperationException(job.getJobType().name() + " is not supported");
         }
     }
 

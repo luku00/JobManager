@@ -25,6 +25,7 @@ public class EmailServiceImpl implements EmailService {
     private String sentFrom;
     private String newSubUserSubject;
     private String resetPasswordSubject;
+    private String newPlanSubject;
     private String resetPasswordBaseUrl;
     private String forgotPasswordBaseUrl;
     private JavaMailSender mailSender;
@@ -67,6 +68,10 @@ public class EmailServiceImpl implements EmailService {
         this.resetPasswordSubject = resetPasswordSubject;
     }
 
+    public void setNewPlanSubject(String newPlanSubject) {
+        this.newPlanSubject = newPlanSubject;
+    }
+
     @Override
     public void sendEmailForNewSubUser(final Job job) {
         Map model = new HashMap();
@@ -106,5 +111,18 @@ public class EmailServiceImpl implements EmailService {
         };
 
         mailSender.send(preparator);
+    }
+
+    @Override
+    public void sendEmailForNewPlan(Job job) {
+        Map model = new HashMap();
+        model.put("user", job.getUserFirstName() + " " + job.getUserLastName());
+        model.put("fromDate", job.getFromDate().toString());
+        model.put("toDate", job.getToDate().toString());
+        model.put("goal", job.getGoalValue());
+        model.put("goalType", job.getGoalType());
+        model.put("reward", job.getReward());
+
+        sendEmail("newPlan", newPlanSubject, job, model);
     }
 }

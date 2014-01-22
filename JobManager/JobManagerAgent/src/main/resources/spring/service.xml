@@ -9,6 +9,7 @@
     <bean id="emailService" class="com.sport.jobmanager.serviceimpl.EmailServiceImpl">
         <property name="newSubUserSubject" value="${subject.new.subuser}"/>
         <property name="resetPasswordSubject" value="${subject.reset.password}"/>
+        <property name="newPlanSubject" value="${subject.new.plan}"/>
         <property name="encoding" value="${email.template.encoding}"/>
         <property name="sentFrom" value="${smtp.user}"/>
         <property name="resetPasswordBaseUrl" value="${url.base}${url.reset.password}"/>
@@ -19,6 +20,7 @@
             <map>
                 <entry key="newSubUser" value="${path.template.newSubUser}" />
                 <entry key="resetPassword" value="${path.template.resetPassword}" />
+                <entry key="newPlan" value="${path.template.newPlan}" />
             </map>
 
         </property>

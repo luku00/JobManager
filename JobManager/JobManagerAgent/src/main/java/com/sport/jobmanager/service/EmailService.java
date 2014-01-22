@@ -19,4 +19,12 @@ public interface EmailService {
      * @throws java.lang.Exception
      */
     void sendEmailForPasswordReset(Job job) throws Exception;
+
+    /**
+     * This will create and send email notification that new plan has been
+     * assigned
+     *
+     * @param job
+     */
+    void sendEmailForNewPlan(Job job);
 }

@@ -14,7 +14,11 @@ public enum JobType {
     /**
      * Email new password reset link process by email agent
      */
-    EMAIL_RESET_PASSWORD("EmailAgent");
+    EMAIL_RESET_PASSWORD("EmailAgent"),
+    /**
+     * Email notification that new plan has been created
+     */
+    EMAIL_NEW_PLAN("EmailAgent");
 
     private final String value;
 
